@@ -107,7 +107,7 @@ func mustParsePuzzleInput(row string) puzzleInput {
 //------------------------------------------------------------------
 
 func main() {
-	content := files.ReadIntoSlice(files.DefaultFilePath)
+	content := files.ReadIntoSliceLineByLine(files.DefaultFilePath)
 
 	var (
 		currentRotationValue uint = 50

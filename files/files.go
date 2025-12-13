@@ -8,7 +8,7 @@ import (
 
 const (
 	DefaultFilePath     = "input.txt"
-	DefaultTestFilePath = "test_input.txt"
+	DefaultTestFilePath = "test-input.txt"
 )
 
 // ReadIntoSlice reads the file at path into a slice of strings (line by line).

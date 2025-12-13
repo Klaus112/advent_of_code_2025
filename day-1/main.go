@@ -7,6 +7,40 @@ import (
 	"github.com/klaus112/advent_of_code_2025/files"
 )
 
+func main() {
+	content := files.ReadIntoSliceLineByLine(files.DefaultFilePath)
+
+	var (
+		currentRotationValue uint = 50
+		zeroHitsCount        uint
+	)
+	for _, row := range content {
+		puzzleInput := mustParsePuzzleInput(row)
+		currentRotationValue = rotatePart1(puzzleInput, currentRotationValue)
+		if currentRotationValue == 0 {
+			zeroHitsCount++
+		}
+	}
+
+	currentRotationValue = 50
+	var totalZeroHitPassCount uint
+
+	for _, row := range content {
+		puzzleInput := mustParsePuzzleInput(row)
+		zeroHitPassCount, newVal := rotatePart2(puzzleInput, currentRotationValue)
+		currentRotationValue = newVal
+		totalZeroHitPassCount += zeroHitPassCount
+		if currentRotationValue == 0 {
+			totalZeroHitPassCount++
+		}
+	}
+
+	fmt.Printf("Part1: Zero hits count: %d\n", zeroHitsCount)
+	fmt.Printf("Part2: Zero hits + pass count: %d\n", totalZeroHitPassCount)
+}
+
+//------------------------------------------------------------------
+
 type direction struct {
 	value string
 }
@@ -102,38 +136,4 @@ func mustParsePuzzleInput(row string) puzzleInput {
 		direction: direction,
 		rotation:  uint(rotation),
 	}
-}
-
-//------------------------------------------------------------------
-
-func main() {
-	content := files.ReadIntoSliceLineByLine(files.DefaultFilePath)
-
-	var (
-		currentRotationValue uint = 50
-		zeroHitsCount        uint
-	)
-	for _, row := range content {
-		puzzleInput := mustParsePuzzleInput(row)
-		currentRotationValue = rotatePart1(puzzleInput, currentRotationValue)
-		if currentRotationValue == 0 {
-			zeroHitsCount++
-		}
-	}
-
-	currentRotationValue = 50
-	var totalZeroHitPassCount uint
-
-	for _, row := range content {
-		puzzleInput := mustParsePuzzleInput(row)
-		zeroHitPassCount, newVal := rotatePart2(puzzleInput, currentRotationValue)
-		currentRotationValue = newVal
-		totalZeroHitPassCount += zeroHitPassCount
-		if currentRotationValue == 0 {
-			totalZeroHitPassCount++
-		}
-	}
-
-	fmt.Printf("Part1: Zero hits count: %d\n", zeroHitsCount)
-	fmt.Printf("Part2: Zero hits + pass count: %d\n", totalZeroHitPassCount)
 }

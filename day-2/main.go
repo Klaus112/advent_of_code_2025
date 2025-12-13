@@ -8,6 +8,32 @@ import (
 	"github.com/klaus112/advent_of_code_2025/files"
 )
 
+func main() {
+	content := files.ReadWithSeperator(files.DefaultFilePath, ",")
+
+	// part 1
+	var sum uint
+	for _, s := range content {
+		pair := mustParseInput(s)
+		increment := addUpInvalidIDsPart1(pair)
+		sum += increment
+	}
+
+	fmt.Printf("Part1: Invalid ID Count: %d\n", sum)
+
+	// part 2
+	sum = 0
+	for _, s := range content {
+		pair := mustParseInput(s)
+		increment := addUpInvalidIDsPart2(pair)
+		sum += increment
+	}
+
+	fmt.Printf("Part2: Invalid ID Count: %d\n", sum)
+}
+
+//------------------------------------------------------------------
+
 type idPair struct {
 	start uint
 	end   uint
@@ -85,30 +111,4 @@ func isRepeating(s, pattern string) bool {
 	}
 
 	return true
-}
-
-//------------------------------------------------------------------
-
-func main() {
-	content := files.ReadWithSeperator(files.DefaultFilePath, ",")
-
-	// part 1
-	var sum uint
-	for _, s := range content {
-		pair := mustParseInput(s)
-		increment := addUpInvalidIDsPart1(pair)
-		sum += increment
-	}
-
-	fmt.Printf("Part1: Invalid ID Count: %d\n", sum)
-
-	// part 2
-	sum = 0
-	for _, s := range content {
-		pair := mustParseInput(s)
-		increment := addUpInvalidIDsPart2(pair)
-		sum += increment
-	}
-
-	fmt.Printf("Part2: Invalid ID Count: %d\n", sum)
 }

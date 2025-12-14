@@ -3,20 +3,21 @@ package main
 import (
 	"testing"
 
+	"github.com/klaus112/advent_of_code_2025/shared"
 	"github.com/stretchr/testify/assert"
 )
 
 func Test_countInvalidIDsInRange(t *testing.T) {
 	tests := map[string]struct {
-		in   idPair
+		in   shared.IDPair
 		want uint
 	}{
 		"11-22": {
-			in:   idPair{11, 22},
+			in:   shared.IDPair{Start: 11, End: 22},
 			want: 33,
 		},
 		"998-1012": {
-			in:   idPair{998, 1012},
+			in:   shared.IDPair{Start: 998, End: 1012},
 			want: 1010,
 		},
 	}
@@ -30,15 +31,15 @@ func Test_countInvalidIDsInRange(t *testing.T) {
 
 func Test_addUpInvalidIDsPart2(t *testing.T) {
 	tests := map[string]struct {
-		in   idPair
+		in   shared.IDPair
 		want uint
 	}{
 		"95-115": {
-			in:   idPair{95, 115},
+			in:   shared.IDPair{Start: 95, End: 115},
 			want: 210,
 		},
 		"998-1012": {
-			in:   idPair{1010, 1010},
+			in:   shared.IDPair{Start: 1010, End: 1010},
 			want: 1010,
 		},
 	}

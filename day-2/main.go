@@ -2,15 +2,13 @@ package main
 
 import (
 	"fmt"
-	"strconv"
-	"strings"
 
 	"github.com/klaus112/advent_of_code_2025/files"
 	"github.com/klaus112/advent_of_code_2025/parse"
 )
 
 func main() {
-	pairs := parse.InputWithSeperator(files.DefaultFilePath, ",", mustParseInput)
+	pairs := parse.InputWithSeperator(files.DefaultFilePath, ",", parse.MustParseIDPair)
 
 	// part 1
 	var sum uint
@@ -33,32 +31,9 @@ func main() {
 
 //------------------------------------------------------------------
 
-type idPair struct {
-	start uint
-	end   uint
-}
-
-func mustParseInput(s string) idPair {
-	parts := strings.Split(s, "-")
-
-	start, err := strconv.Atoi(parts[0])
-	if err != nil {
-		panic(fmt.Errorf("failed parsing start of string '%s': %w", s, err))
-	}
-	end, err := strconv.Atoi(parts[1])
-	if err != nil {
-		panic(fmt.Errorf("failed parsing end of string '%s': %w", s, err))
-	}
-
-	return idPair{
-		start: uint(start),
-		end:   uint(end),
-	}
-}
-
-func addUpInvalidIDsPart1(pair idPair) uint {
+func addUpInvalidIDsPart1(pair parse.IDPair) uint {
 	var res uint
-	for i := pair.start; i <= pair.end; i++ {
+	for i := pair.Start; i <= pair.End; i++ {
 		sNum := fmt.Sprint(i)
 		sLen := len(sNum)
 		if sLen%2 == 0 {
@@ -71,9 +46,9 @@ func addUpInvalidIDsPart1(pair idPair) uint {
 	return res
 }
 
-func addUpInvalidIDsPart2(pair idPair) uint {
+func addUpInvalidIDsPart2(pair parse.IDPair) uint {
 	var res uint
-	for i := pair.start; i <= pair.end; i++ {
+	for i := pair.Start; i <= pair.End; i++ {
 		sNum := fmt.Sprint(i)
 		var searchStr = string(sNum[0])
 		// we start with the first digit and alway add one more digit to the search string

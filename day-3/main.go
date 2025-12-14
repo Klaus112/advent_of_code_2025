@@ -6,19 +6,19 @@ import (
 	"strings"
 
 	"github.com/klaus112/advent_of_code_2025/files"
+	"github.com/klaus112/advent_of_code_2025/parse"
 )
 
 func main() {
-	batterieBanks := files.ReadIntoSliceLineByLine(files.DefaultFilePath)
+	batterieBanks := parse.InputLinebyLine(files.DefaultFilePath, mustParseBatterieBank)
 
 	fmt.Printf("Part1: Highest joltage %d\n", sumHighestJoltageInAllBanks(batterieBanks, 2))
 	fmt.Printf("Part2: Highest joltage %d\n", sumHighestJoltageInAllBanks(batterieBanks, 12))
 }
 
-func sumHighestJoltageInAllBanks(batterieBanks []string, maxBatterieCount int) uint {
+func sumHighestJoltageInAllBanks(batterieBanks []batterieBank, maxBatterieCount int) uint {
 	var sum uint
-	for _, s := range batterieBanks {
-		bank := mustParseBatterieBank(s)
+	for _, bank := range batterieBanks {
 		sum += findHighestJoltageForBank(bank, maxBatterieCount)
 	}
 

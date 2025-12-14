@@ -6,15 +6,15 @@ import (
 	"strings"
 
 	"github.com/klaus112/advent_of_code_2025/files"
+	"github.com/klaus112/advent_of_code_2025/parse"
 )
 
 func main() {
-	content := files.ReadWithSeperator(files.DefaultFilePath, ",")
+	pairs := parse.InputWithSeperator(files.DefaultFilePath, ",", mustParseInput)
 
 	// part 1
 	var sum uint
-	for _, s := range content {
-		pair := mustParseInput(s)
+	for _, pair := range pairs {
 		increment := addUpInvalidIDsPart1(pair)
 		sum += increment
 	}
@@ -23,8 +23,7 @@ func main() {
 
 	// part 2
 	sum = 0
-	for _, s := range content {
-		pair := mustParseInput(s)
+	for _, pair := range pairs {
 		increment := addUpInvalidIDsPart2(pair)
 		sum += increment
 	}

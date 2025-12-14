@@ -5,17 +5,17 @@ import (
 	"strconv"
 
 	"github.com/klaus112/advent_of_code_2025/files"
+	"github.com/klaus112/advent_of_code_2025/parse"
 )
 
 func main() {
-	content := files.ReadIntoSliceLineByLine(files.DefaultFilePath)
+	content := parse.InputLinebyLine(files.DefaultFilePath, mustParsePuzzleInput)
 
 	var (
 		currentRotationValue uint = 50
 		zeroHitsCount        uint
 	)
-	for _, row := range content {
-		puzzleInput := mustParsePuzzleInput(row)
+	for _, puzzleInput := range content {
 		currentRotationValue = rotatePart1(puzzleInput, currentRotationValue)
 		if currentRotationValue == 0 {
 			zeroHitsCount++
@@ -25,8 +25,7 @@ func main() {
 	currentRotationValue = 50
 	var totalZeroHitPassCount uint
 
-	for _, row := range content {
-		puzzleInput := mustParsePuzzleInput(row)
+	for _, puzzleInput := range content {
 		zeroHitPassCount, newVal := rotatePart2(puzzleInput, currentRotationValue)
 		currentRotationValue = newVal
 		totalZeroHitPassCount += zeroHitPassCount

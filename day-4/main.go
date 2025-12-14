@@ -8,12 +8,21 @@ import (
 )
 
 const (
+	emptyRune  = "."
 	searchRune = "@"
 	markedRune = "x"
 )
 
 func main() {
-	board := parse.InputLinebyLine(files.DefaultFilePath, mustParseRow)
+	sum := part1(files.DefaultFilePath)
+	fmt.Printf("Part 1: Accessible paper count: %d\n", sum)
+
+	sum = part2(files.DefaultFilePath)
+	fmt.Printf("Part 2: Accessible paper count: %d\n", sum)
+}
+
+func part1(path string) uint {
+	board := parse.InputLinebyLine(path, mustParseRow)
 
 	for i := range board {
 		for j := range board[i] {
@@ -27,19 +36,61 @@ func main() {
 		}
 	}
 
-	printBoard(board)
-
-	var markSum uint
+	var res uint
 	for i := range board {
 		for j := range board[i] {
 			if board[i][j] == markedRune {
-				markSum++
+				res++
 			}
 		}
 	}
-	fmt.Printf("Accessible paper count: %d\n", markSum)
+
+	// printBoard(board)
+
+	return res
 }
 
+func part2(path string) uint {
+	board := parse.InputLinebyLine(path, mustParseRow)
+
+	var res uint
+
+	for {
+		// mark the next rolls for removal
+		for i := range board {
+			for j := range board[i] {
+				if board[i][j] == searchRune {
+					// paper roll check the neighbours
+					if hasFewerThanFourNeighboursFilled(board, i, j) {
+						board[i][j] = markedRune
+					}
+
+				}
+			}
+		}
+
+		// remove marked roles
+		var iterationInc uint
+		for i := range board {
+			for j := range board[i] {
+				if board[i][j] == markedRune {
+					board[i][j] = emptyRune
+					iterationInc++
+				}
+			}
+		}
+		if iterationInc == 0 {
+			break
+		}
+		res += iterationInc
+
+		// printBoard(board)
+	}
+
+	return res
+}
+
+// printBoard helper function to display the scanned board.
 func printBoard(board [][]string) {
 	for i := range board {
 		for j := range board[i] {
